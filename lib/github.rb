@@ -1,7 +1,7 @@
 # require "pry"
 
 require "httparty"
-#6d501db98d7ebb1af926738a2198ef5811683dd6
+#3e1d673d21d7e965a9b1fe3ca55b024f8525e83b
 module CodeChamp
   class Github
 		include HTTParty
@@ -16,20 +16,43 @@ module CodeChamp
    	end
 
    	def get_contributions(org, repo)
-      results = []
       Github.get("/repos/#{org}/#{repo}/stats/contributors", headers: @headers)
     end
       
-    def retrieve_data(weeks)
-      target_key = "a"
-      target_value = 1
-
-      qualified = weeks.select {|h|h.key?(target_key) && h[target_key]==target_value}
-      return nil if qualified.empty?  
-      qualified.each_with_object({}) {|h,g| g.merge!(h) {|k,gv,hv| k == target_key ? gv : 
-                      (gv.to_i + hv.to_i).to_s}}
+    def retrieve_total(weeks, key)
+      result = 0
+      weeks.each do |week|
+        result += week[key]
+      end
+      result
     end
 
+    # def retrieve_total(weeks, key)
+    #   weeks.map {|week| week[key] }.inject(:+)
+    # end
+
+    # additions = retrieve_total(weeks, "a")
+    # deletions = retrieve_total(weeks, "d")
+    # puts "Additions: #{additions}, Deletions: #{deletions}"
+
+    # def retrieve_data(weeks)
+    #   results = []
+    #   total_a = []
+    #   total_d = []
+    #   total_c = []
+
+    #   weeks.each do |week|
+    #     total_a << week["a"]
+    #     total_d << week["d"]
+    #     total_c << week["c"]
+    #     end
+    #   total_a = total_a.inject(:+)
+    #   total_d = total_d.inject(:+)
+    #   total_c = total_c.inject(:+)
+    #   results.push("Additions: #{total_a}", "Deletions: #{total_d}", "Commits: #{total_d}")
+    #   results
+    #   # binding.pry
+    # end
   end
 end
 
