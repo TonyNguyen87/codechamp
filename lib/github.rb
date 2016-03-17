@@ -1,7 +1,7 @@
 # require "pry"
 
 require "httparty"
-#3e1d673d21d7e965a9b1fe3ca55b024f8525e83b
+#2ed1dff0d6f6d724008d119c631c975fef748328
 module CodeChamp
   class Github
 		include HTTParty
@@ -26,7 +26,8 @@ module CodeChamp
       end
       result
     end
-
+  end
+end
     # def retrieve_total(weeks, key)
     #   weeks.map {|week| week[key] }.inject(:+)
     # end
@@ -53,8 +54,7 @@ module CodeChamp
     #   results
     #   # binding.pry
     # end
-  end
-end
+
 
     # binding.pry sub method get user total loop over author give get user the weeks dig out all the login authors etc
     # response.first["weeks/author"] will get the array

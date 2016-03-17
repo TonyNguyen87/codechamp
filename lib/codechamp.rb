@@ -66,12 +66,15 @@ module CodeChamp
     end
 
     def rank_contributions
+    choice = 0
+    until choice == 5
       puts
       puts "How would you like the data sorted?"
       puts "1. Sort username alphabetically."
       puts "2. User with most additions."
       puts "3. User with most deletions."
       puts "4. User with most changes."
+      puts "5. Fetch another?"
         choice = gets.chomp.to_i
           if choice == 1               
             puts "## Contritbutions for 'owner/repo'"
@@ -101,11 +104,14 @@ module CodeChamp
               @results.sort_by { |x| x[:Changes]}.reverse.each do |result|
               puts "#{result[:User]}   #{result[:Additions]}   #{result[:Deletions]}   #{result[:Changes]}"
               end
+          elsif choice == 5
+            fetch_another?
           else
             puts "Please choose a number between 1-4"
               choice = gets.chomp.to_i
           end
-      choice
+          choice
+        end
     end
 
     def fetch_another?
@@ -134,7 +140,6 @@ codechamp = CodeChamp::App.new
 codechamp.connect_github
 codechamp.collect_contributions
 codechamp.rank_contributions
-codechamp.fetch_another?
 
 
 
